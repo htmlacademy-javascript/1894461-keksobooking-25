@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Джиеншах Одинаев](https://up.htmlacademy.ru/javascript/25/user/1894461).
-* Наставник: `Неизвестно`.
+* Наставник: [Артем Макаров](https://htmlacademy.ru/profile/deepsick).
 
 ---
 
