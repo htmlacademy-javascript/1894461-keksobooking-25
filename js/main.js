@@ -11,7 +11,7 @@ function returnRundomInteger (min, max) {
   }
 
   if  (min > max) {
-    let temporaryVariable = max;
+    const temporaryVariable = max;
     max = min;
     min = temporaryVariable;
   }
@@ -32,7 +32,7 @@ function returnRundomFloat (min, max, float) {
   }
 
   if  (min > max) {
-    let temporaryVariable = max;
+    const temporaryVariable = max;
     max = min;
     min = temporaryVariable;
   }
@@ -40,6 +40,6 @@ function returnRundomFloat (min, max, float) {
   return (Math.random() * (max - min) + min).toFixed(float);
 }
 
-console.log(returnRundomInteger(10,5));
+returnRundomInteger(10,5);
 
-console.log(returnRundomFloat(10, 5, 2));
+returnRundomFloat(10, 5, 2);
