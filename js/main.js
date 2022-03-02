@@ -72,7 +72,7 @@ const getAuthorAvatar = (number) => {
 
 const getArrayElements = (maxQuantity, array) => {
   const arrayLength = returnRandomInteger(0, maxQuantity);
-  let totlalArray = [];
+  const totlalArray = [];
 
   for (let i = 0; i <= arrayLength; i++) {
     totlalArray.push(array[i]);
@@ -110,4 +110,6 @@ const createOffer = () => {
 };
 
 const adList = Array.from({length: 10}, createOffer);
+
+console.log(adList);
 
