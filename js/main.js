@@ -67,7 +67,7 @@ const getAuthorAvatar = (number) => {
     return `img/avatars/user0${number}.png`;
   }
 
-  return 'img/avatars/user' + number + '.png';
+  return  `img/avatars/user${number}.png`;
 };
 
 const getArrayElements = (maxQuantity, array) => {
@@ -91,7 +91,7 @@ const createOffer = () => {
     },
     {
       title: 'БРОНИРУЙТЕ У НАС, ЭТО ВЫГОДНО',
-      address: locationLat + ', ' + locationLng,
+      address: `${locationLat}, ${locationLng}`,
       price: returnRandomInteger (1500, 4000),
       type: typeBooking[returnRandomInteger(0, 5)],
       rooms: returnRandomInteger(1, 5),
@@ -111,5 +111,5 @@ const createOffer = () => {
 
 const adList = Array.from({length: 10}, createOffer);
 
-console.log(adList);
+adList();
 
