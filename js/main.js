@@ -1,4 +1,37 @@
-function returnRandomInteger (min, max) {
+const TYPES_BOOKING = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel'
+];
+
+const TIMES_CHECKIN = [
+  '12:00',
+  '13:00',
+  '14:00'
+];
+
+const FEATURES_LIST = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
+
+const PHOTOS_LIST = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+];
+
+const MIN_PRICE = 1500;
+
+const MAX_PRICE = 4000;
+
+let getRandomInteger = (min, max) => {
   if (!(Number.isInteger(min) && Number.isInteger(max))) {
     return 'Числа должны быть целыми!';
   }
@@ -17,7 +50,7 @@ function returnRandomInteger (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function returnRandomFloat (min, max, float) {
+let getRandomFloat = (min, max, float) => {
   if ((min < 0) || (max < 0)) {
     return 'Введите положительные числа';
   }
@@ -33,74 +66,45 @@ function returnRandomFloat (min, max, float) {
   return (Math.random() * (max - min) + min).toFixed(float);
 }
 
-const typeBooking = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel'
-];
-
-const checkinCheckoutTime = [
-  '12:00',
-  '13:00',
-  '14:00'
-];
-
-const featuresList = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner'
-];
-
-const photosList = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-];
-
-const getAuthorAvatar = (number) => {
-  if (number < 10) {
-    return `img/avatars/user0${number}.png`;
+const getAuthorAvatar = (avatarNumber) => {
+  if (avatarNumber < 10) {
+    return `img/avatars/user0${avatarNumber}.png`;
   }
 
-  return  `img/avatars/user${number}.png`;
+  return  `img/avatars/user${avatarNumber}.png`;
 };
 
-const getArrayElements = (maxQuantity, array) => {
-  const arrayLength = returnRandomInteger(0, maxQuantity);
-  const totlalArray = [];
+const getListElements = (maxCount, items) => {
+  const maxElements = getRandomInteger(0, maxCount);
+  const AllItems= [];
 
-  for (let i = 0; i <= arrayLength; i++) {
-    totlalArray.push(array[i]);
+  for (let i = 0; i <= maxElements - 1; i++) {
+    AllItems.push(items[i]);
   }
 
-  return totlalArray;
+  return AllItems;
 };
 
-const createOffer = () => {
-  const locationLat = returnRandomFloat (35.65000, 35.70000, 5);
-  const locationLng = returnRandomFloat (139.70000, 139.80000, 5);
+const getOffer = () => {
+  const locationLat = getRandomFloat (35.65000, 35.70000, 5);
+  const locationLng = getRandomFloat (139.70000, 139.80000, 5);
 
   return [
     {
-      avatar: getAuthorAvatar(returnRandomInteger(1, 11))
+      avatar: getAuthorAvatar(getRandomFloat(1, 11))
     },
     {
-      title: 'БРОНИРУЙТЕ У НАС, ЭТО ВЫГОДНО',
+      title: 'Бронируйте у нас, это выгодно',
       address: `${locationLat}, ${locationLng}`,
-      price: returnRandomInteger (1500, 4000),
-      type: typeBooking[returnRandomInteger(0, 5)],
-      rooms: returnRandomInteger(1, 5),
-      guests: returnRandomInteger(1, 5),
-      checkin: checkinCheckoutTime[returnRandomInteger(0, 3)],
-      checkout: checkinCheckoutTime[returnRandomInteger(0, 3)],
-      features: getArrayElements(6, featuresList),
+      price: getRandomInteger (MIN_PRICE, MAX_PRICE),
+      type: TYPES_BOOKING[getRandomInteger(0, 5)],
+      rooms: getRandomInteger(1, 5),
+      guests: getRandomInteger(1, 5),
+      checkin: TIMES_CHECKIN[getRandomInteger(0, 3)],
+      checkout: TIMES_CHECKIN[getRandomInteger(0, 3)],
+      features: getListElements(6, FEATURES_LIST),
       description: 'Чисто, уютно, комфортно',
-      photos: getArrayElements(3, photosList),
+      photos: getListElements(3, PHOTOS_LIST),
     },
     {
       lat: locationLat,
@@ -109,7 +113,14 @@ const createOffer = () => {
   ];
 };
 
-const adList = Array.from({length: 10}, createOffer);
 
-adList();
+const getOffersList = (amountOffers) => {
+  let offersList = [];
+  for (let i = 0; i <= amountOffers -1; i++) {
+    offersList.push(getOffer());
+  }
 
+  return offersList;
+}
+
+getOffersList(4);
