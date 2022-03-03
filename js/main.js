@@ -31,6 +31,8 @@ const MIN_PRICE = 1500;
 
 const MAX_PRICE = 4000;
 
+const TWO_DIGIT_NUMBER = 10;
+
 const getRandomInteger = (min, max) => {
   if (!(Number.isInteger(min) && Number.isInteger(max))) {
     return 'Числа должны быть целыми!';
@@ -67,7 +69,7 @@ const getRandomFloat = (min, max, float) => {
 };
 
 const getAuthorAvatar = (avatarNumber) => {
-  if (avatarNumber < 10) {
+  if (avatarNumber < TWO_DIGIT_NUMBER) {
     return `img/avatars/user0${avatarNumber}.png`;
   }
 
