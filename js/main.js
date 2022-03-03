@@ -31,7 +31,7 @@ const MIN_PRICE = 1500;
 
 const MAX_PRICE = 4000;
 
-let getRandomInteger = (min, max) => {
+const getRandomInteger = (min, max) => {
   if (!(Number.isInteger(min) && Number.isInteger(max))) {
     return 'Числа должны быть целыми!';
   }
@@ -48,9 +48,9 @@ let getRandomInteger = (min, max) => {
   }
 
   return Math.floor(Math.random() * (max - min) + min);
-}
+};
 
-let getRandomFloat = (min, max, float) => {
+const getRandomFloat = (min, max, float) => {
   if ((min < 0) || (max < 0)) {
     return 'Введите положительные числа';
   }
@@ -64,7 +64,7 @@ let getRandomFloat = (min, max, float) => {
   }
 
   return (Math.random() * (max - min) + min).toFixed(float);
-}
+};
 
 const getAuthorAvatar = (avatarNumber) => {
   if (avatarNumber < 10) {
@@ -115,12 +115,12 @@ const getOffer = () => {
 
 
 const getOffersList = (amountOffers) => {
-  let offersList = [];
+  const offersList = [];
   for (let i = 0; i <= amountOffers -1; i++) {
     offersList.push(getOffer());
   }
 
   return offersList;
-}
+};
 
 getOffersList(4);
