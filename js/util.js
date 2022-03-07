@@ -34,7 +34,7 @@ const getRandomFloat = (min, max, float) => {
 };
 
 const getAuthorAvatar = (avatarNumber) => (
-  `img/avatars/user${avatarNumber.padStart(2, '0')}.png`;
+  `img/avatars/user${avatarNumber.padStart(2, '0')}.png`
 );
 
 const getListElements = (maxCount, items) => {
