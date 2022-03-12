@@ -37,7 +37,7 @@ const isCapacity = (rooms, guests, className, offer) => {
   if (rooms === '' || guests === '') {
     offer.querySelector(className).classList.add('hidden');
   } else {
-    offer.querySelector(className).textContent = rooms + ' комнаты для ' + guests + ' гостей';
+    offer.querySelector(className).textContent = `${rooms} комнаты для ${guests} гостей`;
   }
 };
 
@@ -45,22 +45,22 @@ const isTime = (checkin, checkout, className, offer) => {
   if (checkin === '' || checkout === '') {
     offer.querySelector(className).classList.add('hidden');
   } else {
-    offer.querySelector(className).textContent = 'Заезд после ' + checkin + ', выезд до ' + checkout;
+    offer.querySelector(className).textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
   }
 };
 
 const isFeatures = (features, featuresContainer, featuresList) => {
-  if (features = []) {
+  if (features === []) {
     featuresContainer.classList.add('hidden');
   } else {
     Array.from(featuresList).forEach((featuresListItem) => {
       const isNecessary = features.some(
-        (feature) => featuresListItem.classList.contains('popup__feature--' + feature)
+        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
       );
 
       if (!isNecessary) {
         featuresListItem.remove();
-      };
+      }
     });
   }
 
@@ -76,7 +76,7 @@ const isPhotos = (photos, photosContainer) =>  {
       photo.src = photos[i];
       photosContainer.appendChild(photo);
     }
-  };
+  }
 };
 
 const similarListElement = document.querySelector('#map-canvas');
@@ -100,8 +100,6 @@ for (let i = 0; i < similarOffers.length; i++) {
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
 
   isFeatures(similarOffer.offer.features, featuresContainer, featuresList);
-
-
 
   isData(similarOffer.offer.description, '.popup__description', offerElement);
 
