@@ -22,7 +22,7 @@ const getOffer = () => {
       description: 'Чисто, уютно, комфортно',
       photos: getListElements(3, PHOTOS),
     },
-  location: {
+    location: {
       lat: locationLat,
       lng: locationLng
     }

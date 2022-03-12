@@ -7,13 +7,13 @@ const isData = (data, className, offer) => {
   } else {
     offer.querySelector(className).textContent = data;
   }
-}
+};
 
 const isPrice = (price, className, offer) => {
   if (price === '') {
     offer.querySelector(className).classList.add('hidden');
   } else {
-    offer.querySelector(className).textContent = price + ' ₽/ночь';
+    offer.querySelector(className).textContent = `${price} ₽/ночь`;
   }
 };
 
