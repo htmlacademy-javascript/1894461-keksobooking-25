@@ -1,3 +1,4 @@
-import {getOffers} from './create-ad.js';
+import './ad.js';
+import './similar-ads.js';
 
-getOffers(4);
+
