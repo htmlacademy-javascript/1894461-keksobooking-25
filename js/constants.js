@@ -7,6 +7,14 @@ const BOOKING_TYPES = [
   'hotel'
 ];
 
+const BookingType = {
+  FLAT: 'Квартира',
+  BUNGALOW: 'Бунгало',
+  HOUSE: 'Дом',
+  PALACE: 'Дворец',
+  HOTEL: 'Отель'
+};
+
 const CHECKIN_TIMES = [
   '12:00',
   '13:00',
@@ -28,9 +36,11 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const prices = {
-  minPrice: 1500,
-  maxPrice: 4000
+const Prices = {
+  MIN_PRICE: 1500,
+  MAX_PRICE: 4000
 };
 
-export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, prices};
+const OFFER_COUNT = 5;
+
+export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Prices, BookingType, OFFER_COUNT};

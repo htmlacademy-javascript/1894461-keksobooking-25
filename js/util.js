@@ -38,10 +38,10 @@ const getAuthorAvatar = (avatarNumber) => (
 );
 
 const getListElements = (maxCount, items) => {
-  const maxElement = getRandomInteger(1, maxCount);
+  const maxElement = getRandomInteger(0, maxCount);
   const allItems = [];
 
-  for (let i = 0; i < maxElement; i++) {
+  for (let i = 0; i <= maxElement; i++) {
     allItems.push(items[i]);
   }
 
