@@ -41,6 +41,6 @@ const Prices = {
   MAX_PRICE: 4000
 };
 
- const OFFER_COUNT = 5;
+const OFFER_COUNT = 5;
 
 export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Prices, BookingType, OFFER_COUNT};

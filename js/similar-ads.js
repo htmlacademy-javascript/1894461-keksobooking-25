@@ -68,7 +68,7 @@ for (let i = 0; i < similarOffers.length; i++) {
   if (similarOffer.offer.photos.length === 0) {
     photosContainer.classList.add('.hidden');
   } else {
-    for (let i = 0; i < similarOffer.offer.photos.length; i++) {
+    for (let j = 0; j < similarOffer.offer.photos.length; j++) {
       const photo = document.createElement('img');
       photo.  classList.add('popup__photo');
       photo.src = similarOffer.offer.photos[i];
