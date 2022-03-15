@@ -7,12 +7,12 @@ const BOOKING_TYPES = [
   'hotel'
 ];
 
-const bookingTypes = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель'
+const BookingType = {
+  FLAT: 'Квартира',
+  BUNGALOW: 'Бунгало',
+  HOUSE: 'Дом',
+  PALACE: 'Дворец',
+  HOTEL: 'Отель'
 };
 
 const CHECKIN_TIMES = [
@@ -41,4 +41,6 @@ const Prices = {
   MAX_PRICE: 4000
 };
 
-export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Prices, bookingTypes};
+ const OFFER_COUNT = 5;
+
+export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Prices, BookingType, OFFER_COUNT};
