@@ -6,11 +6,11 @@ const generateOfferTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const generateOffers = getOffers(OFFERS_COUNT);
+const Offers = getOffers(OFFERS_COUNT);
 
-for (let i = 0; i < generateOffers.length; i++) {
+for (let i = 0; i < Offers.length; i++) {
   const offerElement = generateOfferTemplate.cloneNode(true);
-  const generateOffer = generateOffers[i];
+  const generateOffer = Offers[i];
 
   offerElement.querySelector('.popup__title').textContent = generateOffer.offer.title;
   if (generateOffer.offer.title.length === 0) {
