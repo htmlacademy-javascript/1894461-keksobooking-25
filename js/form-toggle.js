@@ -1,29 +1,21 @@
-const disableChild = (form) => {
+const switchToInactiveState = (form) => {
   form.classList.add(`${form.classList[0]}--disabled`);
 
-  const childList = form.childNodes;
+  const childrenList = form.childNodes;
 
-  childList.forEach((child) => {
-    child.disabled = true;
-  });
+  for (let i = 0; i < childrenList.length; i++) {
+    childrenList[i].disabled = true;
+  }
 };
 
-const enableChild = (form) => {
+const switchToActiveState = (form) => {
   form.classList.remove(`${form.classList[0]}--disabled`);
 
-  const childList = form.childNodes;
+  const childrenList = form.childNodes;
 
-  childList.forEach((child) => {
-    child.disabled = false;
-  });
+  for (let i = 0; i < childrenList.length; i++) {
+    childrenList[i].disabled = true;
+  }
 };
 
-const adForm = document.querySelector('.ad-form');
-disableChild(adForm);
-
-const map = document.querySelector('.map__filters');
-disableChild(map);
-
-enableChild(adForm);
-
-enableChild(map);
+export {switchToInactiveState, switchToActiveState};
