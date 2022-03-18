@@ -1,54 +1,54 @@
 import {getOffers} from './ad.js';
-import {BookingType, OFFER_COUNT} from './constants.js';
+import {BookingType, OFFERS_COUNT} from './constants.js';
 
-const similarListElement = document.querySelector('#map-canvas');
-const similarOfferTemplate = document.querySelector('#card')
+const offerList = document.querySelector('#map-canvas');
+const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const similarOffers = getOffers(OFFER_COUNT);
+const offers = getOffers(OFFERS_COUNT);
 
-for (let i = 0; i < similarOffers.length; i++) {
-  const offerElement = similarOfferTemplate.cloneNode(true);
-  const similarOffer = similarOffers[i];
+for (let i = 0; i < offers.length; i++) {
+  const offerTemplateClone = offerTemplate.cloneNode(true);
+  const offerElement = offers[i];
 
-  offerElement.querySelector('.popup__title').textContent = similarOffer.offer.title;
-  if (similarOffer.offer.title.length === 0) {
-    offerElement.querySelector('.popup__title').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__title').textContent = offerElement.offer.title;
+  if (offerElement.offer.title.length === 0) {
+    offerTemplateClone.querySelector('.popup__title').classList.add('hidden');
   }
 
-  offerElement.querySelector('.popup__text--address').textContent = similarOffer.offer.address;
-  if (similarOffer.offer.address.length === 0) {
-    offerElement.querySelector('.popup__text--address').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__text--address').textContent = offerElement.offer.address;
+  if (offerElement.offer.address.length === 0) {
+    offerTemplateClone.querySelector('.popup__text--address').classList.add('hidden');
   }
 
-  offerElement.querySelector('.popup__text--price').textContent = `${similarOffer.offer.price} ₽/ночь`;
-  if (similarOffer.offer.price.length === 0) {
-    offerElement.querySelector('.popup__text--price').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__text--price').textContent = `${offerElement.offer.price} ₽/ночь`;
+  if (offerElement.offer.price.length === 0) {
+    offerTemplateClone.querySelector('.popup__text--price').classList.add('hidden');
   }
 
-  offerElement.querySelector('.popup__type').textContent = BookingType[similarOffer.offer.type];
-  if (similarOffer.offer.type.length === 0) {
-    offerElement.querySelector('.popup__type').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__type').textContent = BookingType[offerElement.offer.type];
+  if (offerElement.offer.type.length === 0) {
+    offerTemplateClone.querySelector('.popup__type').classList.add('hidden');
   }
 
-  offerElement.querySelector('.popup__text--capacity').textContent = `${similarOffer.offer.rooms} комнаты для ${similarOffer.offer.guests} гостей`;
-  if (similarOffer.offer.rooms.length === 0 || similarOffer.offer.guests.length === 0) {
-    offerElement.querySelector('.popup__text--capacity').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__text--capacity').textContent = `${offerElement.offer.rooms} комнаты для ${offerElement.offer.guests} гостей`;
+  if (offerElement.offer.rooms.length === 0 || offerElement.offer.guests.length === 0) {
+    offerTemplateClone.querySelector('.popup__text--capacity').classList.add('hidden');
   }
 
-  offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${similarOffer.offer.checkin}, выезд до ${similarOffer.offer.checkout}`;
-  if (similarOffer.offer.rooms.length === 0 || similarOffer.offer.guests.length === 0) {
-    offerElement.querySelector('.popup__text--time').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__text--time').textContent = `Заезд после ${offerElement.offer.checkin}, выезд до ${offerElement.offer.checkout}`;
+  if (offerElement.offer.rooms.length === 0 || offerElement.offer.guests.length === 0) {
+    offerTemplateClone.querySelector('.popup__text--time').classList.add('hidden');
   }
 
-  const featuresContainer = offerElement.querySelector('.popup__features');
+  const featuresContainer = offerTemplateClone.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  if (similarOffer.offer.features.length === 0) {
+  if (offerElement.offer.features.length === 0) {
     featuresContainer.classList.add('hidden');
   } else {
     Array.from(featuresList).forEach((featuresListItem) => {
-      const isNecessary = similarOffer.offer.features.some(
+      const isNecessary = offerElement.offer.features.some(
         (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
       );
 
@@ -58,28 +58,28 @@ for (let i = 0; i < similarOffers.length; i++) {
     });
   }
 
-  offerElement.querySelector('.popup__description').textContent = similarOffer.offer.description;
-  if (similarOffer.offer.description.length === 0) {
-    offerElement.querySelector('.popup__description').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__description').textContent = offerElement.offer.description;
+  if (offerElement.offer.description.length === 0) {
+    offerTemplateClone.querySelector('.popup__description').classList.add('hidden');
   }
 
-  const photosContainer = offerElement.querySelector('.popup__photos');
+  const photosContainer = offerTemplateClone.querySelector('.popup__photos');
   photosContainer.innerHTML = '';
-  if (similarOffer.offer.photos.length === 0) {
+  if (offerElement.offer.photos.length === 0) {
     photosContainer.classList.add('.hidden');
   } else {
-    for (let j = 0; j < similarOffer.offer.photos.length; j++) {
+    for (let j = 0; j < offerElement.offer.photos.length; j++) {
       const photo = document.createElement('img');
       photo.  classList.add('popup__photo');
-      photo.src = similarOffer.offer.photos[i];
+      photo.src = offerElement.offer.photos[j];
       photosContainer.appendChild(photo);
     }
   }
 
-  offerElement.querySelector('.popup__avatar').src = similarOffer.author.avatar;
-  if (similarOffer.author.avatar.length === 0) {
-    offerElement.querySelector('.popup__avatar').classList.add('hidden');
+  offerTemplateClone.querySelector('.popup__avatar').src = offerElement.author.avatar;
+  if (offerElement.author.avatar.length === 0) {
+    offerTemplateClone.querySelector('.popup__avatar').classList.add('hidden');
   }
 
-  similarListElement.appendChild(offerElement);
+  offerList.appendChild(offerTemplateClone);
 }

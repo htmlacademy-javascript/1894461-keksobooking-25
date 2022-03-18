@@ -36,11 +36,11 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const Prices = {
-  MIN_PRICE: 1500,
-  MAX_PRICE: 4000
+const Price = {
+  MIN: 1500,
+  MAX: 4000
 };
 
-const OFFER_COUNT = 5;
+const OFFERS_COUNT = 5;
 
-export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Prices, BookingType, OFFER_COUNT};
+export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Price, BookingType, OFFERS_COUNT};
