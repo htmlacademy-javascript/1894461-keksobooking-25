@@ -14,7 +14,7 @@ const switchToActiveState = (form) => {
   const childrenList = form.childNodes;
 
   for (let i = 0; i < childrenList.length; i++) {
-    childrenList[i].disabled = true;
+    childrenList[i].disabled = false;
   }
 };
 
