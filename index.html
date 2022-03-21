@@ -50,7 +50,7 @@
             <option value="1">Один гость</option>
             <option value="0">Не для гостей</option>
           </select>
-          <fieldset name="housing-features" id="housing-features" class="map__features">
+          <fieldset id="housing-features" class="map__features">
             <input type="checkbox" name="features" value="wifi" id="filter-wifi" class="map__checkbox visually-hidden">
             <label class="map__feature map__feature--wifi" for="filter-wifi">Wi-Fi</label>
             <input type="checkbox" name="features" value="dishwasher" id="filter-dishwasher" class="map__checkbox visually-hidden">
@@ -121,27 +121,24 @@
             <option value="14:00">Выезд до 14</option>
           </select>
         </fieldset>
-        <div>
-
-        </div>
-          <fieldset class="ad-form__element ad-form__item">
-            <label class="ad-form__label" for="room_number">Количество комнат</label>
-            <select id="room_number" name="rooms">
-              <option value="1 комната" selected>1 комната</option>
-              <option value="2 комнаты">2 комнаты</option>
-              <option value="3 комнаты">3 комнаты</option>
-              <option value="100 комнат">100 комнат</option>
-            </select>
-          </fieldset>
-          <fieldset class="ad-form__element">
-            <label class="ad-form__label" for="capacity">Количество мест</label>
-            <select id="capacity" name="capacity">
-              <option value="для 3 гостей" selected>для 3 гостей</option>
-              <option value="для 2 гостей">для 2 гостей</option>
-              <option value="для 1 гостя">для 1 гостя</option>
-              <option value="не для гостей">не для гостей</option>
-            </select>
-          </fieldset>
+        <fieldset class="ad-form__element ad-form__item">
+          <label class="ad-form__label" for="room_number">Количество комнат</label>
+          <select id="room_number" name="rooms">
+            <option value="1 комната" selected>1 комната</option>
+            <option value="2 комнаты">2 комнаты</option>
+            <option value="3 комнаты">3 комнаты</option>
+            <option value="100 комнат">100 комнат</option>
+          </select>
+        </fieldset>
+        <fieldset class="ad-form__element">
+          <label class="ad-form__label" for="capacity">Количество мест</label>
+          <select id="capacity" name="capacity">
+            <option value="для 3 гостей" selected>для 3 гостей</option>
+            <option value="для 2 гостей">для 2 гостей</option>
+            <option value="для 1 гостя">для 1 гостя</option>
+            <option value="не для гостей">не для гостей</option>
+          </select>
+        </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide features">
           <legend>Удобства: Wi-Fi, кухня, парковка, стиралка, лифт, кондиционер</legend>
           <input class="features__checkbox visually-hidden" type="checkbox" name="feature" value="wifi" id="feature-wifi">

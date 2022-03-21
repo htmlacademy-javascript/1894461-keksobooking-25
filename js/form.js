@@ -9,19 +9,19 @@ const pristine = new Pristine(adOffer, {
 }, false);
 
 
-const titleOffer = adOffer.querySelector('#title');
+const offerTitle = adOffer.querySelector('#title');
 
-const checkLengthTitle = (title) => ((title.length >=30) && (title.length <=100));
+const checkTitleLength = (title) => title.length >=30 && title.length <=100;
 
 
-pristine.addValidator(titleOffer, checkLengthTitle, 'Не меньше 30 символов и не больше 100', 2, true);
+pristine.addValidator(offerTitle, checkTitleLength, 'Не меньше 30 символов и не больше 100', 2, true);
 
-const priceOffer = adOffer.querySelector('#price');
-const maxPrice = 100000;
+const offerPrice = adOffer.querySelector('#price');
+const MAX_PRICE = 100000;
 
-const checkPrice = (price) => (isFinite(price) && (price <= maxPrice));
+const checkPrice = (price) => (isFinite(price) && (price <= MAX_PRICE));
 
-pristine.addValidator(priceOffer, checkPrice, `Не более ${maxPrice} руб.`, 2, true);
+pristine.addValidator(offerPrice, checkPrice, `Не более ${MAX_PRICE} руб.`, 2, true);
 
 const numberOfRooms = adOffer.querySelector('#room_number');
 const numberOfSeats = adOffer.querySelector('#capacity');
@@ -49,3 +49,25 @@ adOffer.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
 });
+
+const switchToInactiveState = (form) => {
+  form.classList.add(`${form.classList[0]}--disabled`);
+
+  const childrenList = form.childNodes;
+
+  for (let i = 0; i < childrenList.length; i++) {
+    childrenList[i].disabled = true;
+  }
+};
+
+const switchToActiveState = (form) => {
+  form.classList.remove(`${form.classList[0]}--disabled`);
+
+  const childrenList = form.childNodes;
+
+  for (let i = 0; i < childrenList.length; i++) {
+    childrenList[i].disabled = false;
+  }
+};
+
+export {switchToInactiveState, switchToActiveState};
