@@ -72,6 +72,9 @@ for (let i = 0; i < offers.length; i++) {
       const photo = document.createElement('img');
       photo.  classList.add('popup__photo');
       photo.src = offerElement.offer.photos[j];
+      photo.width = '45';
+      photo.height = '40';
+      photo.alt = 'Фотография жилья';
       photosContainer.appendChild(photo);
     }
   }
