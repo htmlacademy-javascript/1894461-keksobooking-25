@@ -32,7 +32,7 @@ const pristine = new Pristine(adForm, {
 
 const locale = 'ru';
 
-const messages = {
+const mapErrorToMessage = {
   required: 'Обязательное поле',
   email: 'В этом поле требуется действующий адрес электронной почты',
   number: 'В этом поле необходимо указать число',
@@ -48,7 +48,7 @@ const messages = {
 };
 
 Pristine.setLocale(locale);
-Pristine.addMessages(locale, messages);
+Pristine.addMessages(locale, mapErrorToMessage);
 
 const offerTitle = adForm.querySelector('#title');
 
@@ -61,7 +61,7 @@ const offerPrice = adForm.querySelector('#price');
 
 const checkPrice = (price) => (+price <= MAX_PRICE) && (+price >= +offerPrice.min);
 
-const errorCheckPrice = (price) => {
+const getPriceError = (price) => {
   if (+price > MAX_PRICE) {
     return `Максимальное значение ${MAX_PRICE}`;
   }
@@ -71,52 +71,57 @@ const errorCheckPrice = (price) => {
   }
 };
 
-pristine.addValidator(offerPrice, checkPrice, errorCheckPrice, 2, true);
+pristine.addValidator(offerPrice, checkPrice, getPriceError, 2, true);
 
-const numberOfRooms = adForm.querySelector('#room_number');
-const numberOfSeats = adForm.querySelector('#capacity');
+const numberRoom = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
 
-const capacityOptions = {
+const mapCapacityToError  = {
   1: ['для 1 гостя'],
   2: ['для 1 гостя' , 'для 2 гостей'],
   3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
   100: ['не для гостей']
 };
 
+const HundredRoomsNotForGuestsValue = {
+  ROOMS: 100,
+  GUESTS: 0
+};
+
 const validateRoomsAndCapacity = () => {
-  if ((numberOfSeats.value === '0' && numberOfRooms.value !== '100') || (numberOfSeats.value !== '0' && numberOfRooms.value === '100'))  {
+  if ((+capacity.value === HundredRoomsNotForGuestsValue.GUESTS && +numberRoom.value !== HundredRoomsNotForGuestsValue.ROOMS) || (+capacity.value !== HundredRoomsNotForGuestsValue.GUESTS && +numberRoom.value === HundredRoomsNotForGuestsValue.ROOMS))  {
     return false;
   }
-  return numberOfSeats.value <= numberOfRooms.value;
+  return capacity.value <= numberRoom.value;
 };
 
 const getRoomsAndCapacityError = () => {
-  if (numberOfRooms.value === '100') {
-    return `Комнаты ${capacityOptions[numberOfRooms.value]}`;
+  if (numberRoom.value === '100') {
+    return `Комнаты ${mapCapacityToError[numberRoom.value]}`;
   }
 
-  return capacityOptions[numberOfRooms.value].join(' или ');
+  return mapCapacityToError[numberRoom.value].join(' или ');
 };
 
-pristine.addValidator(numberOfRooms, validateRoomsAndCapacity, getRoomsAndCapacityError, 1, false);
+pristine.addValidator(numberRoom, validateRoomsAndCapacity, getRoomsAndCapacityError, 1, false);
 
-const pricesForBooking = {
-  palace: 10000,
-  flat: 1000,
-  house: 5000,
-  bungalow: 0,
-  hotel: 3000
+const MapHousingToMinPrice  = {
+  PALACE: 10000,
+  FLAT: 1000,
+  HOUSE: 5000,
+  BUNGALOW: 0,
+  HOTEL: 3000
 };
 
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
-offerPrice.min = pricesForBooking[currentMinPrice];
+offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
 const currentBookingType = adForm.querySelector('#type');
 
 currentBookingType.addEventListener('change', (evt) => {
 
-  offerPrice.placeholder = pricesForBooking[evt.target.value];
-  offerPrice.min = pricesForBooking[evt.target.value];
+  offerPrice.placeholder = MapHousingToMinPrice[evt.target.value.toUpperCase()];
+  offerPrice.min = MapHousingToMinPrice[evt.target.value.toUpperCase()];
 });
 
 const timeIn = adForm.querySelector('#timein');
