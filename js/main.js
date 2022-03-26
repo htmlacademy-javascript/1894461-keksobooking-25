@@ -1,7 +1,7 @@
 import './ad.js';
-import './similar-ads.js';
 import './form.js';
 import {switchToInactiveState, switchToActiveState} from './form.js';
+import './map.js';
 
 const adForm = document.querySelector('.ad-form');
 switchToInactiveState(adForm);

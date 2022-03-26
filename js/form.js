@@ -115,13 +115,51 @@ const MapHousingToMinPrice  = {
 
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
+const sliderElement = document.querySelector('.ad-form__slider');
+const valueElement = document.querySelector('#price');
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: +offerPrice.min,
+    max: MAX_PRICE,
+  },
+  start: +offerPrice.min,
+  step: 1,
+  connect: 'lower',
+  format:{
+    to: function(value) {
+      if (Number.isInteger(value)) {
+        return value;
+      }
+      return value.toFixed(0);
+    },
+    from: function(value) {
+      return parseFloat(value);
+    }
+  }
+});
+
+sliderElement.noUiSlider.on('update', () => {
+  valueElement.value = sliderElement.noUiSlider.get();
+});
+
 
 const currentBookingType = adForm.querySelector('#type');
 
 currentBookingType.addEventListener('change', (evt) => {
-
   offerPrice.placeholder = MapHousingToMinPrice[evt.target.value.toUpperCase()];
   offerPrice.min = MapHousingToMinPrice[evt.target.value.toUpperCase()];
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      min: +offerPrice.min,
+      max: MAX_PRICE
+    },
+    start: +offerPrice.min
+  });
+});
+
+valueElement.addEventListener('change', (evt) => {
+  sliderElement.noUiSlider.set(evt.target.value);
 });
 
 const timeIn = adForm.querySelector('#timein');
