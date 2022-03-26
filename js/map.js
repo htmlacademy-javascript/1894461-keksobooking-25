@@ -1,9 +1,6 @@
 import {getOffers} from './ad.js';
 import {BookingType, OFFERS_COUNT} from './constants.js';
-import {switchToActiveState} from './form.js';
-
-const adForm = document.querySelector('.ad-form');
-const mapFilter = document.querySelector('.map__filters');
+import {switchToActiveState, adForm, mapFilter} from './form.js';
 
 const map = L.map('map')
   .on('load', () => {

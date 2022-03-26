@@ -179,7 +179,8 @@ adForm.addEventListener('submit', (evt) => {
 });
 
 switchToInactiveState(adForm);
+
 const mapFilter = document.querySelector('.map__filters');
 switchToInactiveState(mapFilter);
 
-export {switchToActiveState};
+export {switchToActiveState, adForm, mapFilter};
