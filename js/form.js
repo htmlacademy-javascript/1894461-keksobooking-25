@@ -178,4 +178,8 @@ adForm.addEventListener('submit', (evt) => {
   pristine.validate();
 });
 
-export {switchToInactiveState, switchToActiveState};
+switchToInactiveState(adForm);
+const mapFilter = document.querySelector('.map__filters');
+switchToInactiveState(mapFilter);
+
+export {switchToActiveState};

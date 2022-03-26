@@ -1,8 +1,14 @@
 import {getOffers} from './ad.js';
 import {BookingType, OFFERS_COUNT} from './constants.js';
+import {switchToActiveState} from './form.js';
+
+const adForm = document.querySelector('.ad-form');
+const mapFilter = document.querySelector('.map__filters');
 
 const map = L.map('map')
   .on('load', () => {
+    switchToActiveState(adForm);
+    switchToActiveState(mapFilter);
   })
   .setView({
     lat: 35.6762,
