@@ -38,38 +38,44 @@ const createCustomPopup = (point) => {
 
   const featuresContainer = popupElement.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  if (point.offer.features.length === 0) {
-    featuresContainer.classList.add('hidden');
-  } else {
-    Array.from(featuresList).forEach((featuresListItem) => {
-      const isNecessary = point.offer.features.some(
-        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
-      );
+  if ((Object.prototype.hasOwnProperty.call(point.offer, 'features'))) {
+    if (point.offer.features.length === 0) {
+      featuresContainer.classList.add('hidden');
+    } else {
+      Array.from(featuresList).forEach((featuresListItem) => {
+        const isNecessary = point.offer.features.some(
+          (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
+        );
 
-      if (!isNecessary) {
-        featuresListItem.remove();
-      }
-    });
+        if (!isNecessary) {
+          featuresListItem.remove();
+        }
+      });
+    }
   }
 
   popupElement.querySelector('.popup__description').textContent = point.offer.description;
-  if (point.offer.description.length === 0) {
-    popupElement.querySelector('.popup__description').classList.add('hidden');
+  if ((Object.prototype.hasOwnProperty.call(point.offer, 'description'))) {
+    if (point.offer.description.length === 0) {
+      popupElement.querySelector('.popup__description').classList.add('hidden');
+    }
   }
 
   const photosContainer = popupElement.querySelector('.popup__photos');
   photosContainer.innerHTML = '';
-  if (point.offer.photos.length === 0) {
-    photosContainer.classList.add('.hidden');
-  } else {
-    for (let j = 0; j < point.offer.photos.length; j++) {
-      const photo = document.createElement('img');
-      photo.  classList.add('popup__photo');
-      photo.src = point.offer.photos[j];
-      photo.width = '45';
-      photo.height = '40';
-      photo.alt = 'Фотография жилья';
-      photosContainer.appendChild(photo);
+  if ((Object.prototype.hasOwnProperty.call(point.offer, 'photos'))) {
+    if (point.offer.photos.length === 0) {
+      photosContainer.classList.add('.hidden');
+    } else {
+      for (let j = 0; j < point.offer.photos.length; j++) {
+        const photo = document.createElement('img');
+        photo.  classList.add('popup__photo');
+        photo.src = point.offer.photos[j];
+        photo.width = '45';
+        photo.height = '40';
+        photo.alt = 'Фотография жилья';
+        photosContainer.appendChild(photo);
+      }
     }
   }
 

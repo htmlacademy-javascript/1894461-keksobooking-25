@@ -1,4 +1,3 @@
-
 const MAX_PRICE = 100000;
 
 const BOOKING_TYPES = [
@@ -32,12 +31,6 @@ const FACILITIES = [
   'conditioner'
 ];
 
-const PHOTOS = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
-];
-
 const MapHousingToMinPrice  = {
   PALACE: 10000,
   FLAT: 1000,
@@ -46,11 +39,4 @@ const MapHousingToMinPrice  = {
   HOTEL: 3000
 };
 
-const Price = {
-  MIN: 1500,
-  MAX: 4000
-};
-
-const OFFERS_COUNT = 20;
-
-export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, PHOTOS, Price, BookingType, OFFERS_COUNT, MapHousingToMinPrice, MAX_PRICE};
+export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, BookingType, MapHousingToMinPrice, MAX_PRICE};

@@ -1,4 +1,12 @@
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
+import {setMarkerOnStartPosition} from './map.js';
+
+const adForm = document.querySelector('.ad-form');
+const offerPrice = adForm.querySelector('#price');
+const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
+const currentBookingType = adForm.querySelector('#type');
+const adFormReset = adForm.querySelector('.ad-form__reset');
+const mapFilter = document.querySelector('.map__filters');
 
 const switchToInactiveState = (form) => {
   form.classList.add(`${form.classList[0]}--disabled`);
@@ -20,9 +28,6 @@ const switchToActiveState = (form) => {
   }
 };
 
-const adForm = document.querySelector('.ad-form');
-const offerPrice = adForm.querySelector('#price');
-const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
 const sliderElement = document.querySelector('.ad-form__slider');
@@ -51,7 +56,9 @@ sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
 });
 
-const currentBookingType = adForm.querySelector('#type');
+const resetSliderElement = () => {
+  sliderElement.noUiSlider.reset();
+};
 
 currentBookingType.addEventListener('change', (evt) => {
   offerPrice.placeholder = MapHousingToMinPrice[evt.target.value.toUpperCase()];
@@ -69,9 +76,17 @@ valueElement.addEventListener('change', (evt) => {
   sliderElement.noUiSlider.set(evt.target.value);
 });
 
+const resetForm = () => {
+  adForm.reset();
+  setMarkerOnStartPosition();
+  resetSliderElement();
+};
+
+adFormReset.addEventListener('click', () => resetForm());
+
 switchToInactiveState(adForm);
 
-const mapFilter = document.querySelector('.map__filters');
+
 switchToInactiveState(mapFilter);
 
-export {switchToActiveState, adForm, mapFilter};
+export {switchToActiveState, resetForm, resetSliderElement};
