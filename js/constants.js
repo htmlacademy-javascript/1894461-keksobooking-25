@@ -1,4 +1,4 @@
-const MAX_PRICE = 100000;
+const MAX_PRICE = 5000;
 
 const BOOKING_TYPES = [
   'palace',

@@ -1,8 +1,15 @@
 import './map.js';
-import {resetForm} from './form.js';
-import {setFormSubmit} from './validation.js';
-import { getData } from './api.js';
+import { resetForm } from './form.js';
+import { setFormSubmitListener } from './validation.js';
+import { renderAdsList } from './ads.js';
+import { getAds } from './api.js';
+import { showAlert } from './util.js';
 
-getData();
+getAds(
+  (ads) => {
+    renderAdsList(ads);
+  },
+  showAlert
+);
 
-setFormSubmit(resetForm);
+setFormSubmitListener(resetForm);

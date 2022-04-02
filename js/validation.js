@@ -1,5 +1,6 @@
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
 import { isEscapeKey } from './util.js';
+import {sendAd} from './api.js';
 
 const MAX_ROOM_NUMBER = 100;
 const NOT_FOR_GUESTS_CAPACITY = 0;
@@ -9,11 +10,6 @@ const mapCapacityToError  = {
   2: ['для 1 гостя' , 'для 2 гостей'],
   3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
   100: ['не для гостей']
-};
-
-const HundredRoomsNotForGuestsValue = {
-  ROOMS: 100,
-  GUESTS: 0
 };
 
 const adForm = document.querySelector('.ad-form');
@@ -80,7 +76,7 @@ const validateRoomsAndCapacity = () => {
 };
 
 const getRoomsAndCapacityError = () => {
-  if (+roomNumber.value === HundredRoomsNotForGuestsValue.ROOMS) {
+  if (+roomNumber.value === MAX_ROOM_NUMBER) {
     return `Комнаты ${mapCapacityToError[roomNumber.value]}`;
   }
 
@@ -100,64 +96,46 @@ timeOut.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
 });
 
-const onPopupEscKeydown = (evt, status) => {
+const onPopupEscKeydown = (evt, modalClass) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeModal(status);
+    closeModal(modalClass);
   }
 };
 
-function closeModal (status) {
-  document.querySelector(`.${status}`).remove();
-}
-
-const sendingRequestStatus = (status) => {
-  const statusTemplate = document.querySelector(`#${status}`);
-  const statusElement = statusTemplate.cloneNode(true)
+const sendingRequestModalClass = (modalClass) => {
+  const modalClassTemplate = document.querySelector(`#${modalClass}`);
+  const modalClassElement = modalClassTemplate.cloneNode(true)
     .content
-    .querySelector(`.${status}`);
-  document.body.append(statusElement);
-  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, status));
-  statusElement.addEventListener('click', () => closeModal(status));
+    .querySelector(`.${modalClass}`);
+  document.body.append(modalClassElement);
+  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, modalClass));
+  modalClassElement.addEventListener('click', () => closeModal(modalClass));
 };
 
-const blockSubmitButton = () => {
+function closeModal (modalClass) {
+  document.querySelector(`.${modalClass}`).remove();
+}
+
+const disableSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправляю...';
 };
 
-const unblockSubmitButton = () => {
+const EnableSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
 
-const setFormSubmit = (onSuccess) => {
+const setFormSubmitListener = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValidate = pristine.validate();
 
     if (isValidate) {
-      const formData = new FormData (evt.target);
-      blockSubmitButton();
-      fetch(
-        'https://25.javascript.pages.academy/keksobooking',
-        {
-          method: 'POST',
-          body: formData
-        },)
-        .then(() => {
-          sendingRequestStatus('succes');
-        })
-        .then(() => {
-          unblockSubmitButton();
-          onSuccess();
-        })
-        .catch(() => {
-          sendingRequestStatus('error');
-          unblockSubmitButton();
-        });
+      sendAd(evt, onSuccess);
     }
   });
 };
 
-export {setFormSubmit};
+export {setFormSubmitListener, sendingRequestModalClass, disableSubmitButton, EnableSubmitButton};

@@ -1,5 +1,5 @@
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
-import {setMarkerOnStartPosition} from './map.js';
+import {setMarkerInitialPosition} from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 const offerPrice = adForm.querySelector('#price');
@@ -78,7 +78,7 @@ valueElement.addEventListener('change', (evt) => {
 
 const resetForm = () => {
   adForm.reset();
-  setMarkerOnStartPosition();
+  setMarkerInitialPosition();
   resetSliderElement();
 };
 
