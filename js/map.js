@@ -5,8 +5,6 @@ const initialCoordinates = {
   LONGITUDE: 139.75340
 };
 
-
-
 const adForm = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 const addressField = document.querySelector('#address');
