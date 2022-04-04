@@ -38,9 +38,11 @@ const createCustomPopup = (point) => {
 
   const featuresContainer = popupElement.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  if (point.offer.features.length === 0) {
+  if (!(point.offer && point.offer.features)) {
     featuresContainer.classList.add('hidden');
-  } else {
+  }
+
+  if (point.offer && point.offer.features) {
     Array.from(featuresList).forEach((featuresListItem) => {
       const isNecessary = point.offer.features.some(
         (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
@@ -53,15 +55,17 @@ const createCustomPopup = (point) => {
   }
 
   popupElement.querySelector('.popup__description').textContent = point.offer.description;
-  if (point.offer.description.length === 0) {
+  if (!(point.offer && point.offer.description)) {
     popupElement.querySelector('.popup__description').classList.add('hidden');
   }
 
   const photosContainer = popupElement.querySelector('.popup__photos');
   photosContainer.innerHTML = '';
-  if (point.offer.photos.length === 0) {
+  if (!(point.offer && point.offer.photos)) {
     photosContainer.classList.add('.hidden');
-  } else {
+  }
+
+  if (point.offer && point.offer.photos) {
     for (let j = 0; j < point.offer.photos.length; j++) {
       const photo = document.createElement('img');
       photo.  classList.add('popup__photo');

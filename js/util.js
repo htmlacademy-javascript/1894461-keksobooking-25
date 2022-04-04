@@ -1,51 +1,27 @@
-const getRandomInteger = (min, max) => {
-  if (!(Number.isInteger(min) && Number.isInteger(max))) {
-    return 'Числа должны быть целыми!';
-  }
-  if ((min < 0) || (max < 0)) {
-    return 'Введите положительные числа';
-  }
+const ALERT_SHOW_TIME = 5000;
+const ESCAPE_KEY = 'Escape';
 
-  if (min === max) {
-    return 'Введите разные числа';
-  }
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = '#f79a9a';
 
-  if  (min > max) {
-    return 'Неверный диапазон. Значение "от" больше значения "до"';
-  }
+  alertContainer.textContent = message;
 
-  return Math.floor(Math.random() * (max - min) + min);
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-const getRandomFloat = (min, max, float) => {
-  if ((min < 0) || (max < 0)) {
-    return 'Введите положительные числа';
-  }
+const isEscapeKey = (evt) => evt.key === ESCAPE_KEY;
 
-  if (min === max) {
-    return 'Введите разные числа';
-  }
-
-  if  (min > max) {
-    return 'Неверный диапазон. Значение "от" больше значения "до"';
-  }
-
-  return (Math.random() * (max - min) + min).toFixed(float);
-};
-
-const getAuthorAvatar = (avatarNumber) => (
-  `img/avatars/user${avatarNumber.padStart(2, '0')}.png`
-);
-
-const getListElements = (maxCount, items) => {
-  const maxElement = getRandomInteger(0, maxCount);
-  const allItems = [];
-
-  for (let i = 0; i <= maxElement; i++) {
-    allItems.push(items[i]);
-  }
-
-  return allItems;
-};
-
-export {getRandomInteger, getRandomFloat, getAuthorAvatar, getListElements};
+export {showAlert, isEscapeKey};

@@ -1,7 +1,16 @@
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
+import { isEscapeKey } from './util.js';
+import {sendAd} from './api.js';
 
 const MAX_ROOM_NUMBER = 100;
 const NOT_FOR_GUESTS_CAPACITY = 0;
+
+const mapCapacityToError = {
+  1: ['для 1 гостя'],
+  2: ['для 1 гостя' , 'для 2 гостей'],
+  3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
+  100: ['не для гостей']
+};
 
 const adForm = document.querySelector('.ad-form');
 const pristine = new Pristine(adForm, {
@@ -34,13 +43,16 @@ Pristine.setLocale(locale);
 Pristine.addMessages(locale, mapErrorToMessage);
 
 const offerTitle = adForm.querySelector('#title');
+const offerPrice = adForm.querySelector('#price');
+const roomNumber = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+const submitButton = adForm.querySelector('.ad-form__submit');
 
 const checkTitleLength = (title) => title.length >=30 && title.length <=100;
 
-
 pristine.addValidator(offerTitle, checkTitleLength, 'Не меньше 30 символов и не больше 100', 2, true);
-
-const offerPrice = adForm.querySelector('#price');
 
 const checkPrice = (price) => (+price <= MAX_PRICE) && (+price >= +offerPrice.min);
 
@@ -56,21 +68,6 @@ const getPriceError = (price) => {
 
 pristine.addValidator(offerPrice, checkPrice, getPriceError, 2, true);
 
-const roomNumber = adForm.querySelector('#room_number');
-const capacity = adForm.querySelector('#capacity');
-
-const mapCapacityToError  = {
-  1: ['для 1 гостя'],
-  2: ['для 1 гостя' , 'для 2 гостей'],
-  3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
-  100: ['не для гостей']
-};
-
-const HundredRoomsNotForGuestsValue = {
-  ROOMS: 100,
-  GUESTS: 0
-};
-
 const validateRoomsAndCapacity = () => {
   if ((+capacity.value === NOT_FOR_GUESTS_CAPACITY && +roomNumber.value !== MAX_ROOM_NUMBER) || (+capacity.value !== NOT_FOR_GUESTS_CAPACITY && +roomNumber.value === MAX_ROOM_NUMBER))  {
     return false;
@@ -79,7 +76,7 @@ const validateRoomsAndCapacity = () => {
 };
 
 const getRoomsAndCapacityError = () => {
-  if (+roomNumber.value === HundredRoomsNotForGuestsValue.ROOMS) {
+  if (+roomNumber.value === MAX_ROOM_NUMBER) {
     return `Комнаты ${mapCapacityToError[roomNumber.value]}`;
   }
 
@@ -91,9 +88,6 @@ pristine.addValidator(roomNumber, validateRoomsAndCapacity, getRoomsAndCapacityE
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-
 timeIn.addEventListener('change', (evt) => {
   timeOut.value = evt.target.value;
 });
@@ -102,7 +96,48 @@ timeOut.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
 });
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const onPopupEscKeydown = (evt, modalClass) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal(modalClass);
+  }
+};
+
+const disableSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Отправляю...';
+};
+
+const EnableSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const showModalWindow = (modalClass) => {
+  const modalClassTemplate = document.querySelector(`#${modalClass}`);
+  const modalClassElement = modalClassTemplate.cloneNode(true)
+    .content
+    .querySelector(`.${modalClass}`);
+  document.body.append(modalClassElement);
+  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, modalClass));
+  modalClassElement.addEventListener('click', () => closeModal(modalClass));
+  EnableSubmitButton();
+};
+
+function closeModal (modalClass) {
+  document.querySelector(`.${modalClass}`).remove();
+}
+
+const setFormSubmitListener = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValidate = pristine.validate();
+
+    if (isValidate) {
+      disableSubmitButton();
+      sendAd(evt, onSuccess);
+    }
+  });
+};
+
+export {setFormSubmitListener, showModalWindow, disableSubmitButton};

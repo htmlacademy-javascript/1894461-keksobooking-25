@@ -1,10 +1,13 @@
-import {getOffers} from './ad.js';
-import {OFFERS_COUNT} from './constants.js';
-import {switchToActiveState, adForm, mapFilter} from './form.js';
-import {createCustomPopup} from './balloon-content.js';
+import {switchToActiveState} from './form.js';
 
-const LATITUDE = 35.6762;
-const LONGITUDE = 139.6503;
+const InitialCoordinates = {
+  LATITUDE: 35.68380,
+  LONGITUDE: 139.75340
+};
+
+const adForm = document.querySelector('.ad-form');
+const mapFilter = document.querySelector('.map__filters');
+const addressField = document.querySelector('#address');
 
 const map = L.map('map')
   .on('load', () => {
@@ -12,8 +15,8 @@ const map = L.map('map')
     switchToActiveState(mapFilter);
   })
   .setView({
-    lat: LATITUDE,
-    lng: LONGITUDE,
+    lat: InitialCoordinates.LATITUDE,
+    lng: InitialCoordinates.LONGITUDE,
   }, 10);
 
 L.tileLayer(
@@ -40,8 +43,8 @@ const regularPinIcon =  L.icon({
 
 const  mainMarker = L.marker(
   {
-    lat: LATITUDE,
-    lng: LONGITUDE,
+    lat: InitialCoordinates.LATITUDE,
+    lng: InitialCoordinates.LONGITUDE,
   },
   {
     draggable: true,
@@ -52,28 +55,21 @@ const  mainMarker = L.marker(
 mainMarker.addTo(map);
 
 const startLatLng = mainMarker.getLatLng();
-const addressField = document.querySelector('#address');
-addressField.value = `lat: ${startLatLng.lat.toFixed(5)}, lng: ${startLatLng.lng.toFixed(5)}`;
+
+const setMarkerInitialPosition = () => {
+  mainMarker.setLatLng(
+    {
+      lat: InitialCoordinates.LATITUDE,
+      lng: InitialCoordinates.LONGITUDE,
+    });
+  addressField.value = `lat: ${startLatLng.lat.toFixed(5)}, lng: ${startLatLng.lng.toFixed(5)}`;
+};
+
+setMarkerInitialPosition();
 
 mainMarker.on('moveend', (evt) => {
   const currentLatLng = evt.target.getLatLng();
   addressField.value = `lat: ${currentLatLng.lat.toFixed(5)}, lng: ${currentLatLng.lng.toFixed(5)}`;
 });
 
-const points = getOffers(OFFERS_COUNT);
-
-points.forEach((point) => {
-  const lat = point.location.lat;
-  const lng = point.location.lng;
-  const regularMarker = L.marker(
-    {
-      lat,
-      lng
-    },
-    {
-      icon: regularPinIcon
-    }
-  );
-  regularMarker.addTo(map);
-  regularMarker.bindPopup(createCustomPopup(point));
-});
+export {regularPinIcon, map, setMarkerInitialPosition};
