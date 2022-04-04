@@ -5,7 +5,7 @@ import {sendAd} from './api.js';
 const MAX_ROOM_NUMBER = 100;
 const NOT_FOR_GUESTS_CAPACITY = 0;
 
-const mapCapacityToError  = {
+const mapCapacityToError = {
   1: ['для 1 гостя'],
   2: ['для 1 гостя' , 'для 2 гостей'],
   3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
@@ -103,20 +103,6 @@ const onPopupEscKeydown = (evt, modalClass) => {
   }
 };
 
-const sendingRequestModalClass = (modalClass) => {
-  const modalClassTemplate = document.querySelector(`#${modalClass}`);
-  const modalClassElement = modalClassTemplate.cloneNode(true)
-    .content
-    .querySelector(`.${modalClass}`);
-  document.body.append(modalClassElement);
-  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, modalClass));
-  modalClassElement.addEventListener('click', () => closeModal(modalClass));
-};
-
-function closeModal (modalClass) {
-  document.querySelector(`.${modalClass}`).remove();
-}
-
 const disableSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = 'Отправляю...';
@@ -127,15 +113,31 @@ const EnableSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
+const showModalWindow = (modalClass) => {
+  const modalClassTemplate = document.querySelector(`#${modalClass}`);
+  const modalClassElement = modalClassTemplate.cloneNode(true)
+    .content
+    .querySelector(`.${modalClass}`);
+  document.body.append(modalClassElement);
+  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, modalClass));
+  modalClassElement.addEventListener('click', () => closeModal(modalClass));
+  EnableSubmitButton();
+};
+
+function closeModal (modalClass) {
+  document.querySelector(`.${modalClass}`).remove();
+}
+
 const setFormSubmitListener = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValidate = pristine.validate();
 
     if (isValidate) {
+      disableSubmitButton();
       sendAd(evt, onSuccess);
     }
   });
 };
 
-export {setFormSubmitListener, sendingRequestModalClass, disableSubmitButton, EnableSubmitButton};
+export {setFormSubmitListener, showModalWindow, disableSubmitButton};

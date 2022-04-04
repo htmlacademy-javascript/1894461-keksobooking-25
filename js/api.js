@@ -1,37 +1,41 @@
 
-import { sendingRequestModalClass, disableSubmitButton, EnableSubmitButton } from './validation.js';
+import { showModalWindow } from './validation.js';
 
+const FAILURE_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
 const REQUEST_METHOD = 'POST';
-const REQUEST_URL = 'https://25.javascript.pages.academy/keksobooking';
+const SUCCESS_CLASS = 'succes';
+const ERROR_CLASS = 'error';
+const RequestUrl = {
+  POST: 'https://25.javascript.pages.academy/keksobooking',
+  GET: 'https://25.javascript.pages.academy/keksobooking/data'
+};
+
 
 const getAds = (onSuccess, onFail) => {
-  fetch('https://25.javascript.pages.academy/keksobooking/data')
+  fetch(RequestUrl.GET)
     .then((response) => response.json())
     .then((ads) => {
       onSuccess(ads);
     })
-    .catch(() => onFail('Не удалось получить данные. Попробуйте ещё раз'));
+    .catch(() => onFail(FAILURE_MESSAGE));
 };
 
 const sendAd = (evt, onSuccess) => {
   const formData = new FormData (evt.target);
-  disableSubmitButton();
   fetch(
-    REQUEST_URL,
+    RequestUrl.POST,
     {
       method: REQUEST_METHOD,
       body: formData
     },)
     .then(() => {
-      sendingRequestModalClass('success');
+      showModalWindow(SUCCESS_CLASS);
     })
     .then(() => {
-      EnableSubmitButton();
       onSuccess();
     })
     .catch(() => {
-      sendingRequestModalClass('error');
-      EnableSubmitButton();
+      showModalWindow(ERROR_CLASS);
     });
 };
 

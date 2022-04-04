@@ -82,7 +82,7 @@ const resetForm = () => {
   resetSliderElement();
 };
 
-adFormReset.addEventListener('click', () => resetForm());
+adFormReset.addEventListener('click', resetForm());
 
 switchToInactiveState(adForm);
 

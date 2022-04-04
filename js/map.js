@@ -1,6 +1,6 @@
 import {switchToActiveState} from './form.js';
 
-const initialCoordinates = {
+const InitialCoordinates = {
   LATITUDE: 35.68380,
   LONGITUDE: 139.75340
 };
@@ -15,8 +15,8 @@ const map = L.map('map')
     switchToActiveState(mapFilter);
   })
   .setView({
-    lat: initialCoordinates.LATITUDE,
-    lng: initialCoordinates.LONGITUDE,
+    lat: InitialCoordinates.LATITUDE,
+    lng: InitialCoordinates.LONGITUDE,
   }, 10);
 
 L.tileLayer(
@@ -43,8 +43,8 @@ const regularPinIcon =  L.icon({
 
 const  mainMarker = L.marker(
   {
-    lat: initialCoordinates.LATITUDE,
-    lng: initialCoordinates.LONGITUDE,
+    lat: InitialCoordinates.LATITUDE,
+    lng: InitialCoordinates.LONGITUDE,
   },
   {
     draggable: true,
@@ -59,8 +59,8 @@ const startLatLng = mainMarker.getLatLng();
 const setMarkerInitialPosition = () => {
   mainMarker.setLatLng(
     {
-      lat: initialCoordinates.LATITUDE,
-      lng: initialCoordinates.LONGITUDE,
+      lat: InitialCoordinates.LATITUDE,
+      lng: InitialCoordinates.LONGITUDE,
     });
   addressField.value = `lat: ${startLatLng.lat.toFixed(5)}, lng: ${startLatLng.lng.toFixed(5)}`;
 };
