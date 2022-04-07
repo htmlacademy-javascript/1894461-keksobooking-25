@@ -3,7 +3,7 @@ import { showModalWindow } from './validation.js';
 
 const FAILURE_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
 const REQUEST_METHOD = 'POST';
-const SUCCESS_CLASS = 'succes';
+const SUCCESS_CLASS = 'success';
 const ERROR_CLASS = 'error';
 const RequestUrl = {
   POST: 'https://25.javascript.pages.academy/keksobooking',

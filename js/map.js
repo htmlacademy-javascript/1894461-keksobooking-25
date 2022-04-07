@@ -1,4 +1,4 @@
-import {switchToActiveState} from './form.js';
+import {switchToActiveState} from './form-activation.js';
 
 const InitialCoordinates = {
   LATITUDE: 35.68380,
@@ -54,6 +54,7 @@ const  mainMarker = L.marker(
 
 mainMarker.addTo(map);
 
+const markerGroup = L.layerGroup().addTo(map);
 const startLatLng = mainMarker.getLatLng();
 
 const setMarkerInitialPosition = () => {
@@ -72,4 +73,4 @@ mainMarker.on('moveend', (evt) => {
   addressField.value = `lat: ${currentLatLng.lat.toFixed(5)}, lng: ${currentLatLng.lng.toFixed(5)}`;
 });
 
-export {regularPinIcon, map, setMarkerInitialPosition};
+export {regularPinIcon, map, setMarkerInitialPosition, markerGroup};
