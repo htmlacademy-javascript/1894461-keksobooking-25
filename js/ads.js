@@ -3,6 +3,9 @@ import {createCustomPopup} from './balloon-content.js';
 
 const AD_COUNT = 10;
 const DEFAULT_VALUE = 'any';
+const LOW_PRICE = 'low';
+const MIDDLE_PRICE = 'middle';
+const HIGH_PRICE = 'high';
 const PriceValue = {
   LOW: 10000,
   MIDDLE: 50000,
@@ -15,22 +18,22 @@ const housingPrice = document.querySelector('[name="housing-price"]');
 const housingRoom = document.querySelector('[name="housing-rooms"]');
 const housingGuest = document.querySelector('[name="housing-guests"]');
 
-const filterByType = (ad) => ad.offer.type === housingType.value || DEFAULT_VALUE === housingType.value;
-const filterByRoom = (ad) => +ad.offer.rooms === +housingRoom.value || DEFAULT_VALUE === housingRoom.value;
-const filterByPrice = (ad) => {
-  if (housingPrice.value  === 'low') {
+const checkType = (ad) => ad.offer.type === housingType.value || DEFAULT_VALUE === housingType.value;
+const checkRoom = (ad) => +ad.offer.rooms === +housingRoom.value || DEFAULT_VALUE === housingRoom.value;
+const checkPrice = (ad) => {
+  if (housingPrice.value  === LOW_PRICE) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()];
   }
-  if (housingPrice.value  === 'middle') {
+  if (housingPrice.value  === MIDDLE_PRICE) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()] && ad.offer.price > PriceValue.LOW;
   }
-  if (housingPrice.value  === 'high') {
+  if (housingPrice.value  === HIGH_PRICE) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()] && ad.offer.price > PriceValue.MIDDLE;
   }
   return true;
 };
 
-const filterByGuest = (ad) => {
+const checkGuest = (ad) => {
   if (+housingGuest.value  === ad.offer.guests) {
     return true;
   }
@@ -39,32 +42,26 @@ const filterByGuest = (ad) => {
   }
 };
 
-const filterByFeature = (ad) => {
+const checkFeature = (ad) => {
   const markedFeatures = [];
-  const checkedCheckbox = document.querySelectorAll('[name="features"]:checked');
-  checkedCheckbox.forEach((checkbox) => {
+  const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
+  checkedCheckboxes.forEach((checkbox) => {
     markedFeatures.push(checkbox.value);
   });
 
   if (ad.offer.features) {
-    let count = 0;
-    for (let i = 0; i < markedFeatures.length; i++){
-      if(ad.offer.features.indexOf(markedFeatures[i]) !== -1) {
-        count++;
-      }
-    }
-    return count === markedFeatures.length;
+    const matchFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
+    return matchFeature;
   }
 };
 
-const getFilteredAds = (ads) => ads.filter(filterByType).filter(filterByPrice).filter(filterByRoom).filter(filterByGuest).filter(filterByFeature);
+const getFilteredAds = (ad) => (checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad));
 
 const renderAds = (ads) => {
   markerGroup.clearLayers();
-  const copyOfReceivedAds = ads.slice();
-  const filteredAds = getFilteredAds(copyOfReceivedAds);
-  filteredAds
+  ads
     .slice()
+    .filter(getFilteredAds)
     .slice(0, AD_COUNT)
     .forEach((ad) => {
       const lat = ad.location.lat;
