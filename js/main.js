@@ -3,6 +3,7 @@ import { setFormSubmitListener } from './validation.js';
 import { renderAds, setFilterChange } from './ads.js';
 import { getAds } from './api.js';
 import { showAlert, debounce } from './util.js';
+import './avatar.js';
 
 const RERENDER_DELAY = 500;
 
