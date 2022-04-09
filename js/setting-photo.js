@@ -16,6 +16,11 @@ avatarChooser.addEventListener('change', () => {
 
 const roomPhotoChooser = document.querySelector('.ad-form__upload input[type=file]');
 const roomPhotoWrapper = document.querySelector('.ad-form__photo');
+const roomPhoto = document.createElement('img');
+roomPhotoWrapper.appendChild(roomPhoto);
+roomPhoto.src = '';
+roomPhoto.style.width = '70px';
+roomPhoto.style.height = '70px';
 
 roomPhotoChooser.addEventListener('change', () => {
   const file = roomPhotoChooser.files[0];
@@ -24,7 +29,6 @@ roomPhotoChooser.addEventListener('change', () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-
-    roomPhotoWrapper.src = URL.createObjectURL(file);
+    roomPhoto.src = URL.createObjectURL(file);
   }
 });
