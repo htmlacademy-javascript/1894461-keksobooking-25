@@ -22,16 +22,15 @@ roomPhotoChooser.addEventListener('change', () => {
 
   const roomPhoto = document.createElement('img');
   roomPhotoWrapper.appendChild(roomPhoto);
-  roomPhoto.src = '';
-  roomPhoto.style.width = '70px';
-  roomPhoto.style.height = '70px';
-  roomPhoto.accept = 'image/gif, image/jpg, image/jpeg, image/png';
   const file = roomPhotoChooser.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
+    roomPhoto.style.width = '70px';
+    roomPhoto.style.height = '70px';
+    roomPhoto.accept = 'image/gif, image/jpg, image/jpeg, image/png';
     roomPhoto.src = URL.createObjectURL(file);
   }
 });
