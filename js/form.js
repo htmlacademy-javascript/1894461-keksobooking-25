@@ -1,32 +1,11 @@
-import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
 import {setMarkerInitialPosition} from './map.js';
+import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
 
 const adForm = document.querySelector('.ad-form');
 const offerPrice = adForm.querySelector('#price');
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 const currentBookingType = adForm.querySelector('#type');
 const adFormReset = adForm.querySelector('.ad-form__reset');
-const mapFilter = document.querySelector('.map__filters');
-
-const switchToInactiveState = (form) => {
-  form.classList.add(`${form.classList[0]}--disabled`);
-
-  const childrenList = form.childNodes;
-
-  for (let i = 0; i < childrenList.length; i++) {
-    childrenList[i].disabled = true;
-  }
-};
-
-const switchToActiveState = (form) => {
-  form.classList.remove(`${form.classList[0]}--disabled`);
-
-  const childrenList = form.childNodes;
-
-  for (let i = 0; i < childrenList.length; i++) {
-    childrenList[i].disabled = false;
-  }
-};
 
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
@@ -77,16 +56,11 @@ valueElement.addEventListener('change', (evt) => {
 });
 
 const resetForm = () => {
-  adForm.reset();
+  adForm.reset(setMarkerInitialPosition);
   setMarkerInitialPosition();
   resetSliderElement();
 };
 
 adFormReset.addEventListener('click', resetForm());
 
-switchToInactiveState(adForm);
-
-
-switchToInactiveState(mapFilter);
-
-export {switchToActiveState, resetForm, resetSliderElement};
+export {resetForm, resetSliderElement};
