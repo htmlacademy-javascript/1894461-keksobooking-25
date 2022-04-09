@@ -58,13 +58,16 @@ valueElement.addEventListener('change', (evt) => {
 });
 
 const resetForm = () => {
-  adForm.reset(setMarkerInitialPosition);
+  adForm.reset();
   setMarkerInitialPosition();
   resetSliderElement();
   previewAvatar.src = 'img/muffin-grey.svg';
   roomPhotoWrapper.innerHTML = '';
 };
 
-adFormReset.addEventListener('click', resetForm());
+adFormReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
 
 export {resetForm, resetSliderElement};
