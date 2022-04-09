@@ -16,10 +16,6 @@ avatarChooser.addEventListener('change', () => {
   }
 });
 roomPhotoChooser.addEventListener('change', () => {
-  if (roomPhotoWrapper.querySelector('img')) {
-    roomPhotoWrapper.innerHTML = '';
-  }
-
   const roomPhoto = document.createElement('img');
   roomPhotoWrapper.appendChild(roomPhoto);
   const file = roomPhotoChooser.files[0];
@@ -28,6 +24,10 @@ roomPhotoChooser.addEventListener('change', () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
+    if (roomPhotoWrapper.querySelectorAll('img').length > 1) {
+      const photoList = roomPhotoWrapper.querySelectorAll('img');
+      roomPhotoWrapper.removeChild(photoList[0]);
+    }
     roomPhoto.style.width = '70px';
     roomPhoto.style.height = '70px';
     roomPhoto.accept = 'image/gif, image/jpg, image/jpeg, image/png';
