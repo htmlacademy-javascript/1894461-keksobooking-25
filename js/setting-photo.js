@@ -15,6 +15,7 @@ avatarChooser.addEventListener('change', () => {
     previewAvatar.src = URL.createObjectURL(file);
   }
 });
+
 roomPhotoChooser.addEventListener('change', () => {
   const roomPhoto = document.createElement('img');
   roomPhotoWrapper.appendChild(roomPhoto);
