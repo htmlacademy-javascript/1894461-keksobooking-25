@@ -1,4 +1,4 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['avif', 'gif', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp', 'tiff', 'tif', 'ico', 'xbm', 'jxl', 'svgz', 'bmp'];
 
 const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
@@ -18,6 +18,8 @@ avatarChooser.addEventListener('change', () => {
 
 roomPhotoChooser.addEventListener('change', () => {
   const roomPhoto = document.createElement('img');
+  roomPhoto.style.width = '70px';
+  roomPhoto.style.height = '70px';
   roomPhotoWrapper.appendChild(roomPhoto);
   const file = roomPhotoChooser.files[0];
   const fileName = file.name.toLowerCase();
@@ -29,9 +31,6 @@ roomPhotoChooser.addEventListener('change', () => {
       const photoList = roomPhotoWrapper.querySelectorAll('img');
       roomPhotoWrapper.removeChild(photoList[0]);
     }
-    roomPhoto.style.width = '70px';
-    roomPhoto.style.height = '70px';
-    roomPhoto.accept = 'image/gif, image/jpg, image/jpeg, image/png';
     roomPhoto.src = URL.createObjectURL(file);
   }
 });
