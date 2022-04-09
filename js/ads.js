@@ -51,8 +51,8 @@ const checkFeature = (ad, checkedCheckboxes) => {
   });
 
   if (ad.offer.features) {
-    const matchFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
-    return matchFeature;
+    const isMatchedFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
+    return isMatchedFeature;
   }
 };
 
