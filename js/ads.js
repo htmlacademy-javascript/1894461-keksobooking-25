@@ -3,13 +3,15 @@ import {createCustomPopup} from './balloon-content.js';
 
 const AD_COUNT = 10;
 const DEFAULT_VALUE = 'any';
-const LOW_PRICE = 'low';
-const MIDDLE_PRICE = 'middle';
-const HIGH_PRICE = 'high';
 const PriceValue = {
   LOW: 10000,
   MIDDLE: 50000,
   HIGH: 100000
+};
+const PriceCategory = {
+  LOW: 'low',
+  MIDDLE: 'middle',
+  HIGH: 'high'
 };
 
 const mapFilter = document.querySelector('.map__filters');
@@ -21,13 +23,13 @@ const housingGuest = document.querySelector('[name="housing-guests"]');
 const checkType = (ad) => ad.offer.type === housingType.value || DEFAULT_VALUE === housingType.value;
 const checkRoom = (ad) => +ad.offer.rooms === +housingRoom.value || DEFAULT_VALUE === housingRoom.value;
 const checkPrice = (ad) => {
-  if (housingPrice.value  === LOW_PRICE) {
+  if (housingPrice.value  === PriceCategory.LOW) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()];
   }
-  if (housingPrice.value  === MIDDLE_PRICE) {
+  if (housingPrice.value  === PriceCategory.MIDDLE) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()] && ad.offer.price > PriceValue.LOW;
   }
-  if (housingPrice.value  === HIGH_PRICE) {
+  if (housingPrice.value  === PriceCategory.HIGH) {
     return ad.offer.price <= PriceValue[housingPrice.value.toUpperCase()] && ad.offer.price > PriceValue.MIDDLE;
   }
   return true;
@@ -42,21 +44,22 @@ const checkGuest = (ad) => {
   }
 };
 
-const checkFeature = (ad) => {
+const checkFeature = (ad, checkedCheckboxes) => {
   const markedFeatures = [];
-  const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
   checkedCheckboxes.forEach((checkbox) => {
     markedFeatures.push(checkbox.value);
   });
 
   if (ad.offer.features) {
-    const matchFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
-    return matchFeature;
+    const isMatchedFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
+    return isMatchedFeature;
   }
 };
 
-const getFilteredAds = (ad) => (checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad));
-
+const getFilteredAds = (ad) => {
+  const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
+  return (checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad, checkedCheckboxes));
+};
 const renderAds = (ads) => {
   markerGroup.clearLayers();
   ads

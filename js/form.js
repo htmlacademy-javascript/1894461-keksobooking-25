@@ -6,6 +6,8 @@ const offerPrice = adForm.querySelector('#price');
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 const currentBookingType = adForm.querySelector('#type');
 const adFormReset = adForm.querySelector('.ad-form__reset');
+const previewAvatar = document.querySelector('.ad-form-header__preview img');
+const roomPhotoWrapper = document.querySelector('.ad-form__photo');
 
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
@@ -56,11 +58,16 @@ valueElement.addEventListener('change', (evt) => {
 });
 
 const resetForm = () => {
-  adForm.reset(setMarkerInitialPosition);
+  adForm.reset();
   setMarkerInitialPosition();
   resetSliderElement();
+  previewAvatar.src = 'img/muffin-grey.svg';
+  roomPhotoWrapper.innerHTML = '';
 };
 
-adFormReset.addEventListener('click', resetForm());
+adFormReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
 
 export {resetForm, resetSliderElement};
