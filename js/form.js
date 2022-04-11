@@ -1,5 +1,8 @@
 import {setMarkerInitialPosition} from './map.js';
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
+import './validation.js';
+
+const DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
 
 const adForm = document.querySelector('.ad-form');
 const offerPrice = adForm.querySelector('#price');
@@ -12,14 +15,13 @@ const roomPhotoWrapper = document.querySelector('.ad-form__photo');
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
 const sliderElement = document.querySelector('.ad-form__slider');
-const valueElement = document.querySelector('#price');
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: +offerPrice.min,
+    min: +MapHousingToMinPrice[currentMinPrice.toUpperCase()],
     max: MAX_PRICE,
   },
-  start: +offerPrice.min,
+  start: +MapHousingToMinPrice[currentMinPrice.toUpperCase()],
   step: 1,
   connect: 'lower',
   format:{
@@ -33,12 +35,15 @@ noUiSlider.create(sliderElement, {
   }
 });
 
-sliderElement.noUiSlider.on('update', () => {
-  valueElement.value = sliderElement.noUiSlider.get();
-});
-
 const resetSliderElement = () => {
   sliderElement.noUiSlider.reset();
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      min: +MapHousingToMinPrice[currentMinPrice.toUpperCase()],
+      max: MAX_PRICE,
+    },
+    start: +MapHousingToMinPrice[currentMinPrice.toUpperCase()]
+  });
 };
 
 currentBookingType.addEventListener('change', (evt) => {
@@ -53,16 +58,22 @@ currentBookingType.addEventListener('change', (evt) => {
   });
 });
 
-valueElement.addEventListener('change', (evt) => {
-  sliderElement.noUiSlider.set(evt.target.value);
+sliderElement.noUiSlider.on('slide', () => {
+  offerPrice.value = sliderElement.noUiSlider.get();
+});
+
+offerPrice.addEventListener('input', () => {
+  sliderElement.noUiSlider.set(offerPrice.value);
 });
 
 const resetForm = () => {
   adForm.reset();
   setMarkerInitialPosition();
-  resetSliderElement();
-  previewAvatar.src = 'img/muffin-grey.svg';
+  offerPrice.placeholder = MapHousingToMinPrice.FLAT;
+  offerPrice.min = MapHousingToMinPrice.FLAT;
+  previewAvatar.src = DEFAULT_AVATAR_URL;
   roomPhotoWrapper.innerHTML = '';
+  resetSliderElement();
 };
 
 adFormReset.addEventListener('click', (evt) => {
