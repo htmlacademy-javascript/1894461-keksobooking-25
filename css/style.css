@@ -270,6 +270,10 @@ fieldset {
   pointer-events: none;
 }
 
+.ad-form__error {
+  color: rgb(173, 33, 33)
+}
+
 .ad-form-header {
   width: 100%;
   padding-bottom: 20px;

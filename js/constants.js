@@ -1,4 +1,4 @@
-const MAX_PRICE = 5000;
+const MAX_PRICE = 100000;
 
 const BOOKING_TYPES = [
   'palace',
@@ -32,11 +32,11 @@ const FACILITIES = [
 ];
 
 const MapHousingToMinPrice  = {
-  PALACE: 10000,
-  FLAT: 1000,
-  HOUSE: 5000,
-  BUNGALOW: 0,
-  HOTEL: 3000
+  PALACE: '10000',
+  FLAT: '1000',
+  HOUSE: '5000',
+  BUNGALOW: '0',
+  HOTEL: '3000'
 };
 
 export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, BookingType, MapHousingToMinPrice, MAX_PRICE};

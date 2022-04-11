@@ -20,6 +20,17 @@ const housingPrice = document.querySelector('[name="housing-price"]');
 const housingRoom = document.querySelector('[name="housing-rooms"]');
 const housingGuest = document.querySelector('[name="housing-guests"]');
 
+const getCheckedCheckboxesList = () => {
+  const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
+  const markedFeatures = [];
+  checkedCheckboxes.forEach((checkbox) => {
+    markedFeatures.push(checkbox.value);
+  });
+
+  return markedFeatures;
+};
+
+
 const checkType = (ad) => ad.offer.type === housingType.value || DEFAULT_VALUE === housingType.value;
 const checkRoom = (ad) => +ad.offer.rooms === +housingRoom.value || DEFAULT_VALUE === housingRoom.value;
 const checkPrice = (ad) => {
@@ -44,22 +55,14 @@ const checkGuest = (ad) => {
   }
 };
 
-const checkFeature = (ad, checkedCheckboxes) => {
-  const markedFeatures = [];
-  checkedCheckboxes.forEach((checkbox) => {
-    markedFeatures.push(checkbox.value);
-  });
-
+const checkFeature = (ad) => {
   if (ad.offer.features) {
-    const isMatchedFeature = markedFeatures.every((markedFeature) => ad.offer.features.includes(markedFeature));
+    const isMatchedFeature = getCheckedCheckboxesList().every((markedFeature) => ad.offer.features.includes(markedFeature));
     return isMatchedFeature;
   }
 };
 
-const getFilteredAds = (ad) => {
-  const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
-  return (checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad, checkedCheckboxes));
-};
+const getFilteredAds = (ad) => checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad);
 const renderAds = (ads) => {
   markerGroup.clearLayers();
   ads
