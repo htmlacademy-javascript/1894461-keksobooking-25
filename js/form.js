@@ -11,10 +11,8 @@ const currentBookingType = adForm.querySelector('#type');
 const adFormReset = adForm.querySelector('.ad-form__reset');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
 const roomPhotoWrapper = document.querySelector('.ad-form__photo');
-
-offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
-
 const sliderElement = document.querySelector('.ad-form__slider');
+offerPrice.min = +MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
 noUiSlider.create(sliderElement, {
   range: {

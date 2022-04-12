@@ -1,7 +1,9 @@
 const FILE_TYPES = ['avif', 'gif', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp', 'tiff', 'tif', 'ico', 'xbm', 'jxl', 'svgz', 'bmp'];
 
-const ROOM_PHOTO_WIDTH = '70px';
-const ROOM_PHOTO_HEIGHT = '70px';
+const RoomPhoto = {
+  WIDTH: '70px',
+  HEIGHT: '70px'
+};
 
 const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
@@ -21,8 +23,8 @@ avatarChooser.addEventListener('change', () => {
 
 roomPhotoChooser.addEventListener('change', () => {
   const roomPhoto = document.createElement('img');
-  roomPhoto.style.width = ROOM_PHOTO_WIDTH;
-  roomPhoto.style.height = ROOM_PHOTO_HEIGHT;
+  roomPhoto.style.width = RoomPhoto.WIDTH;
+  roomPhoto.style.height = RoomPhoto.HEIGHT;
   roomPhotoWrapper.appendChild(roomPhoto);
   const file = roomPhotoChooser.files[0];
   const fileName = file.name.toLowerCase();
@@ -31,8 +33,8 @@ roomPhotoChooser.addEventListener('change', () => {
 
   if (matches) {
     if (roomPhotoWrapper.querySelectorAll('img').length > 1) {
-      const photoList = roomPhotoWrapper.querySelectorAll('img');
-      roomPhotoWrapper.removeChild(photoList[0]);
+      const photos = roomPhotoWrapper.querySelectorAll('img');
+      roomPhotoWrapper.removeChild(photos[0]);
     }
     roomPhoto.src = URL.createObjectURL(file);
   }

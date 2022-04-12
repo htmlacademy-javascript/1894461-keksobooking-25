@@ -3,8 +3,10 @@ import { showModalWindow } from './validation.js';
 
 const FAILURE_MESSAGE = 'Не удалось получить данные. Попробуйте ещё раз';
 const REQUEST_METHOD = 'POST';
-const SUCCESS_CLASS = 'success';
-const ERROR_CLASS = 'error';
+const RequestStatusClass = {
+  SUCCESS: 'success',
+  ERROR: 'error'
+};
 const RequestUrl = {
   POST: 'https://25.javascript.pages.academy/keksobooking',
   GET: 'https://25.javascript.pages.academy/keksobooking/data'
@@ -29,13 +31,13 @@ const sendAd = (evt, onSuccess) => {
       body: formData
     },)
     .then(() => {
-      showModalWindow(SUCCESS_CLASS);
+      showModalWindow(RequestStatusClass.SUCCESS);
     })
     .then(() => {
       onSuccess();
     })
     .catch(() => {
-      showModalWindow(ERROR_CLASS);
+      showModalWindow(RequestStatusClass.ERROR);
     });
 };
 
