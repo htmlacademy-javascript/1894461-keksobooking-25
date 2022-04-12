@@ -1,6 +1,11 @@
 import {switchToActiveState} from './form-activation.js';
 
-const InitialCoordinates = {
+const MAP_SCALE = '12';
+const IconUrl = {
+  MAIN: './img/main-pin.svg',
+  REGULAR: './img/pin.svg'
+};
+const InitialCoordinate = {
   LATITUDE: 35.68380,
   LONGITUDE: 139.75340
 };
@@ -8,16 +13,18 @@ const InitialCoordinates = {
 const adForm = document.querySelector('.ad-form');
 const mapFilter = document.querySelector('.map__filters');
 const addressField = document.querySelector('#address');
+const mainPinIconSideLength = 52;
+const regularPinIconSideLength = 40;
 
 const map = L.map('map')
   .on('load', () => {
-    switchToActiveState(adForm);
     switchToActiveState(mapFilter);
+    switchToActiveState(adForm);
   })
   .setView({
-    lat: InitialCoordinates.LATITUDE,
-    lng: InitialCoordinates.LONGITUDE,
-  }, 10);
+    lat: InitialCoordinate.LATITUDE,
+    lng: InitialCoordinate.LONGITUDE,
+  }, MAP_SCALE);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -26,25 +33,22 @@ L.tileLayer(
   }
 ).addTo(map);
 
-const mainPinIconSideLength = 52;
-const regularPinIconSideLength = 40;
-
 const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
+  iconUrl: IconUrl.MAIN,
   iconSize: [mainPinIconSideLength, mainPinIconSideLength],
   iconAnchor: [mainPinIconSideLength/2, mainPinIconSideLength],
 });
 
 const regularPinIcon =  L.icon({
-  iconUrl: './img/pin.svg',
+  iconUrl: IconUrl.REGULAR,
   iconSize: [regularPinIconSideLength, regularPinIconSideLength],
   iconAnchor: [regularPinIconSideLength/2, regularPinIconSideLength],
 });
 
 const  mainMarker = L.marker(
   {
-    lat: InitialCoordinates.LATITUDE,
-    lng: InitialCoordinates.LONGITUDE,
+    lat: InitialCoordinate.LATITUDE,
+    lng: InitialCoordinate.LONGITUDE,
   },
   {
     draggable: true,
@@ -60,17 +64,17 @@ const startLatLng = mainMarker.getLatLng();
 const setMarkerInitialPosition = () => {
   mainMarker.setLatLng(
     {
-      lat: InitialCoordinates.LATITUDE,
-      lng: InitialCoordinates.LONGITUDE,
+      lat: InitialCoordinate.LATITUDE,
+      lng: InitialCoordinate.LONGITUDE,
     });
-  addressField.value = `lat: ${startLatLng.lat.toFixed(5)}, lng: ${startLatLng.lng.toFixed(5)}`;
+  addressField.value = `Широта: ${startLatLng.lat.toFixed(5)}, Долгота: ${startLatLng.lng.toFixed(5)}`;
 };
 
 setMarkerInitialPosition();
 
-mainMarker.on('moveend', (evt) => {
+mainMarker.on('move', (evt) => {
   const currentLatLng = evt.target.getLatLng();
-  addressField.value = `lat: ${currentLatLng.lat.toFixed(5)}, lng: ${currentLatLng.lng.toFixed(5)}`;
+  addressField.value = `Широта: ${currentLatLng.lat.toFixed(5)}, Долгота: ${currentLatLng.lng.toFixed(5)}`;
 });
 
 export {regularPinIcon, map, setMarkerInitialPosition, markerGroup};

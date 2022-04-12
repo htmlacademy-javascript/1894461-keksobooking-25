@@ -1,5 +1,11 @@
 import {BookingType} from './constants.js';
 
+const OfferPhotoAttribute = {
+  WIDTH: '45',
+  HEIGHT: '40',
+  ALT:'Фотография жилья'
+};
+
 const createCustomPopup = (point) => {
   const balloonTemplate = document.querySelector('#card')
     .content
@@ -37,19 +43,19 @@ const createCustomPopup = (point) => {
   }
 
   const featuresContainer = popupElement.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+  const features = featuresContainer.querySelectorAll('.popup__feature');
   if (!(point.offer && point.offer.features)) {
     featuresContainer.classList.add('hidden');
   }
 
   if (point.offer && point.offer.features) {
-    Array.from(featuresList).forEach((featuresListItem) => {
+    Array.from(features).forEach((featuresItem) => {
       const isNecessary = point.offer.features.some(
-        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
+        (feature) => featuresItem.classList.contains(`popup__feature--${feature}`)
       );
 
       if (!isNecessary) {
-        featuresListItem.remove();
+        featuresItem.remove();
       }
     });
   }
@@ -70,9 +76,9 @@ const createCustomPopup = (point) => {
       const photo = document.createElement('img');
       photo.  classList.add('popup__photo');
       photo.src = point.offer.photos[j];
-      photo.width = '45';
-      photo.height = '40';
-      photo.alt = 'Фотография жилья';
+      photo.width = OfferPhotoAttribute.WIDTH;
+      photo.height = OfferPhotoAttribute.HEIGHT;
+      photo.alt = OfferPhotoAttribute.ALT;
       photosContainer.appendChild(photo);
     }
   }

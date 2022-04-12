@@ -1,7 +1,7 @@
 import {regularPinIcon, markerGroup} from './map.js';
 import {createCustomPopup} from './balloon-content.js';
 
-const AD_COUNT = 10;
+const ADS_COUNT = 10;
 const DEFAULT_VALUE = 'any';
 const PriceValue = {
   LOW: 10000,
@@ -20,7 +20,7 @@ const housingPrice = document.querySelector('[name="housing-price"]');
 const housingRoom = document.querySelector('[name="housing-rooms"]');
 const housingGuest = document.querySelector('[name="housing-guests"]');
 
-const getCheckedCheckboxesList = () => {
+const getCheckedCheckboxes = () => {
   const checkedCheckboxes = document.querySelectorAll('[name="features"]:checked');
   const markedFeatures = [];
   checkedCheckboxes.forEach((checkbox) => {
@@ -50,25 +50,26 @@ const checkGuest = (ad) => {
   if (+housingGuest.value  === ad.offer.guests) {
     return true;
   }
-  if (housingGuest.value === DEFAULT_VALUE) {
-    return true;
-  }
+
+  return housingGuest.value === DEFAULT_VALUE;
 };
 
 const checkFeature = (ad) => {
   if (ad.offer.features) {
-    const isMatchedFeature = getCheckedCheckboxesList().every((markedFeature) => ad.offer.features.includes(markedFeature));
+    const isMatchedFeature = getCheckedCheckboxes().every((markedFeature) => ad.offer.features.includes(markedFeature));
     return isMatchedFeature;
   }
+
+  return false;
 };
 
-const getFilteredAds = (ad) => checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad);
+const isAdMatchFilter = (ad) => checkType(ad) && checkPrice(ad) && checkRoom(ad) && checkGuest(ad) && checkFeature(ad);
 const renderAds = (ads) => {
   markerGroup.clearLayers();
   ads
     .slice()
-    .filter(getFilteredAds)
-    .slice(0, AD_COUNT)
+    .filter(isAdMatchFilter)
+    .slice(0, ADS_COUNT)
     .forEach((ad) => {
       const lat = ad.location.lat;
       const lng = ad.location.lng;

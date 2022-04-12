@@ -1,3 +1,4 @@
+import './form-activation.js';
 import { resetForm } from './form.js';
 import { setFormSubmitListener } from './validation.js';
 import { renderAds, setFilterChange } from './ads.js';
@@ -19,3 +20,4 @@ getAds(
 );
 
 setFormSubmitListener(resetForm);
+

@@ -4,13 +4,18 @@ import {sendAd} from './api.js';
 
 const MAX_ROOM_NUMBER = 100;
 const NOT_FOR_GUESTS_CAPACITY = 0;
-const FIRST_PARAMETER = ['${', '1}'].join('');
+const PRISTINE_ERROR_PARAMETER = ['${', '1}'].join('');
 
 const mapCapacityToError = {
   1: ['для 1 гостя'],
   2: ['для 1 гостя' , 'для 2 гостей'],
   3: ['для 1 гостя' , 'для 2 гостей', 'для 3 гостей'],
   100: ['не для гостей']
+};
+
+const TitleLength = {
+  MIN: '30',
+  MAX: '100'
 };
 
 const adForm = document.querySelector('.ad-form');
@@ -23,7 +28,7 @@ const pristine = new window.Pristine(adForm, {
   errorTextClass: 'ad-form__error'
 }, false);
 
-const locale = 'ru';
+const LOCALE = 'ru';
 
 const mapErrorToMessage = {
   required: 'Обязательное поле',
@@ -32,15 +37,15 @@ const mapErrorToMessage = {
   integer: 'Это поле требует целочисленного значения',
   url: 'В этом поле необходимо указать действительный URL-адрес веб-сайта',
   tel: 'В этом поле необходимо указать действительный номер телефона',
-  maxlength: `Длина этого поля должна быть < ${FIRST_PARAMETER}`,
-  minlength: `Длина этого поля должна быть > ${FIRST_PARAMETER}`,
-  min: `Минимальное значение для этого поля ${FIRST_PARAMETER}`,
-  max: `Максимальное значение для этого поля ${FIRST_PARAMETER}`,
+  maxlength: `Длина этого поля должна быть < ${PRISTINE_ERROR_PARAMETER}`,
+  minlength: `Длина этого поля должна быть > ${PRISTINE_ERROR_PARAMETER}`,
+  min: `Минимальное значение для этого поля ${PRISTINE_ERROR_PARAMETER}`,
+  max: `Максимальное значение для этого поля ${PRISTINE_ERROR_PARAMETER}`,
   pattern: 'Выберите соответствующий формат',
   equals: 'Два поля не совпадают'
 };
-window.Pristine.setLocale(locale);
-window.Pristine.addMessages(locale, mapErrorToMessage);
+window.Pristine.setLocale(LOCALE);
+window.Pristine.addMessages(LOCALE, mapErrorToMessage);
 
 const offerTitle = adForm.querySelector('#title');
 const offerPrice = adForm.querySelector('#price');
@@ -52,7 +57,7 @@ const submitButton = adForm.querySelector('.ad-form__submit');
 const currentMinPrice = adForm.querySelector('[name="type"] option:checked').value;
 offerPrice.min = MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
-const checkTitleLength = (title) => title.length >=30 && title.length <=100;
+const checkTitleLength = (title) => title.length >= TitleLength.MIN && title.length <= TitleLength.MAX;
 
 pristine.addValidator(offerTitle, checkTitleLength, 'Не меньше 30 символов и не больше 100', 2, true);
 
