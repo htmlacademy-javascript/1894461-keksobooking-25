@@ -1,6 +1,6 @@
-import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
+import { MapHousingToMinPrice, MAX_PRICE } from './constants.js';
 import { isEscapeKey } from './util.js';
-import {sendAd} from './api.js';
+import { sendAd } from './api.js';
 
 const MAX_ROOM_NUMBER = 100;
 const NOT_FOR_GUESTS_CAPACITY = 0;
