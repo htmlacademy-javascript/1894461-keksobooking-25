@@ -1,4 +1,4 @@
-import {createCustomPopup} from './balloon-content.js';
+import { createCustomPopup } from './balloon-content.js';
 import { showRenderAds } from './ads.js';
 
 const MAP_SCALE = '12';
@@ -84,4 +84,4 @@ mainMarker.on('move', (evt) => {
   addressField.value = `${currentLatLng.lat.toFixed(5)}, ${currentLatLng.lng.toFixed(5)}`;
 });
 
-export {regularPinIcon, map, setMarkerInitialPosition, markerGroup, addMarkerToMap, removeMarkersFromMap};
+export {regularPinIcon, setMarkerInitialPosition, addMarkerToMap, removeMarkersFromMap};

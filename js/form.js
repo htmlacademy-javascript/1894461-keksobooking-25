@@ -4,7 +4,6 @@ import './validation.js';
 import { showRenderAds } from './ads.js';
 
 const DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
-const RERENDER_DELAY = 500;
 
 const adForm = document.querySelector('.ad-form');
 const offerPrice = adForm.querySelector('#price');
