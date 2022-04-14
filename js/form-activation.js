@@ -3,9 +3,9 @@ const switchToActiveState = (form) => {
 
   const children = form.childNodes;
 
-  for (let i = 0; i < children.length; i++) {
-    children[i].disabled = false;
-  }
+  children.forEach((child) => {
+    child.disabled = false;
+  });
 };
 
 export {switchToActiveState};

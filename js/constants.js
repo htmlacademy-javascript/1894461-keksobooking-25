@@ -1,13 +1,5 @@
 const MAX_PRICE = 100000;
 
-const BOOKING_TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel'
-];
-
 const BookingType = {
   FLAT: 'Квартира',
   BUNGALOW: 'Бунгало',
@@ -15,21 +7,6 @@ const BookingType = {
   PALACE: 'Дворец',
   HOTEL: 'Отель'
 };
-
-const CHECKIN_TIMES = [
-  '12:00',
-  '13:00',
-  '14:00'
-];
-
-const FACILITIES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner'
-];
 
 const MapHousingToMinPrice  = {
   PALACE: '10000',
@@ -39,4 +16,4 @@ const MapHousingToMinPrice  = {
   HOTEL: '3000'
 };
 
-export {BOOKING_TYPES, CHECKIN_TIMES, FACILITIES, BookingType, MapHousingToMinPrice, MAX_PRICE};
+export {BookingType, MapHousingToMinPrice, MAX_PRICE};
