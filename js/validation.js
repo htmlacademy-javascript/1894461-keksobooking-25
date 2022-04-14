@@ -114,7 +114,7 @@ const disableSubmitButton = () => {
   submitButton.textContent = 'Отправляю...';
 };
 
-const EnableSubmitButton = () => {
+const enableSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = 'Опубликовать';
 };
@@ -125,9 +125,12 @@ const showModalWindow = (modalClass) => {
     .content
     .querySelector(`.${modalClass}`);
   document.body.append(modalClassElement);
-  document.addEventListener('keydown', (evt) => onPopupEscKeydown(evt, modalClass));
+  document.addEventListener('keydown', function handler(evt) {
+    onPopupEscKeydown(evt, modalClass);
+    this.removeEventListener('keydown', handler);
+  });
   modalClassElement.addEventListener('click', () => closeModal(modalClass));
-  EnableSubmitButton();
+  enableSubmitButton();
 };
 
 function closeModal (modalClass) {

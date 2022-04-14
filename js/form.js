@@ -1,8 +1,10 @@
 import {setMarkerInitialPosition} from './map.js';
 import {MapHousingToMinPrice, MAX_PRICE } from './constants.js';
 import './validation.js';
+import { showRenderAds } from './ads.js';
 
 const DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
+const RERENDER_DELAY = 500;
 
 const adForm = document.querySelector('.ad-form');
 const offerPrice = adForm.querySelector('#price');
@@ -12,6 +14,7 @@ const adFormReset = adForm.querySelector('.ad-form__reset');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
 const roomPhotoWrapper = document.querySelector('.ad-form__photo');
 const sliderElement = document.querySelector('.ad-form__slider');
+const mapFilters = document.querySelector('.map__filters');
 offerPrice.min = +MapHousingToMinPrice[currentMinPrice.toUpperCase()];
 
 noUiSlider.create(sliderElement, {
@@ -65,6 +68,8 @@ offerPrice.addEventListener('input', () => {
 });
 
 const resetForm = () => {
+  mapFilters.reset();
+  showRenderAds();
   adForm.reset();
   setMarkerInitialPosition();
   offerPrice.placeholder = MapHousingToMinPrice.FLAT;

@@ -1,4 +1,5 @@
-import {switchToActiveState} from './form-activation.js';
+import {createCustomPopup} from './balloon-content.js';
+import { showRenderAds } from './ads.js';
 
 const MAP_SCALE = '12';
 const IconUrl = {
@@ -10,16 +11,13 @@ const InitialCoordinate = {
   LONGITUDE: 139.75340
 };
 
-const adForm = document.querySelector('.ad-form');
-const mapFilter = document.querySelector('.map__filters');
 const addressField = document.querySelector('#address');
 const mainPinIconSideLength = 52;
 const regularPinIconSideLength = 40;
 
 const map = L.map('map')
   .on('load', () => {
-    switchToActiveState(mapFilter);
-    switchToActiveState(adForm);
+    showRenderAds();
   })
   .setView({
     lat: InitialCoordinate.LATITUDE,
@@ -61,20 +59,29 @@ mainMarker.addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
 const startLatLng = mainMarker.getLatLng();
 
+const addMarkerToMap = (marker, ad) => {
+  marker.addTo(markerGroup);
+  marker.bindPopup(createCustomPopup(ad));
+};
+
+const removeMarkersFromMap = () => {
+  markerGroup.clearLayers();
+};
+
 const setMarkerInitialPosition = () => {
   mainMarker.setLatLng(
     {
       lat: InitialCoordinate.LATITUDE,
       lng: InitialCoordinate.LONGITUDE,
     });
-  addressField.value = `Широта: ${startLatLng.lat.toFixed(5)}, Долгота: ${startLatLng.lng.toFixed(5)}`;
+  addressField.value = `${startLatLng.lat.toFixed(5)}, ${startLatLng.lng.toFixed(5)}`;
 };
 
 setMarkerInitialPosition();
 
 mainMarker.on('move', (evt) => {
   const currentLatLng = evt.target.getLatLng();
-  addressField.value = `Широта: ${currentLatLng.lat.toFixed(5)}, Долгота: ${currentLatLng.lng.toFixed(5)}`;
+  addressField.value = `${currentLatLng.lat.toFixed(5)}, ${currentLatLng.lng.toFixed(5)}`;
 });
 
-export {regularPinIcon, map, setMarkerInitialPosition, markerGroup};
+export {regularPinIcon, map, setMarkerInitialPosition, markerGroup, addMarkerToMap, removeMarkersFromMap};
